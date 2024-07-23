@@ -67,44 +67,4 @@ export const validateUpdateUserInput = withValidationErrors([
     }),
 ]);
 
-export const validateUpdatePasswordInput = withValidationErrors([
-  body("oldPassword").notEmpty().withMessage("oldPassword is required"),
-  body("newPassword")
-    .notEmpty()
-    .withMessage("newPassword is required")
-    .isLength({ min: 8 })
-    .withMessage("password must be at least 8 characters long"),
-]);
 
-export const validateVerifyEmailInput = withValidationErrors([
-  body("verificationToken")
-    .notEmpty()
-    .withMessage("verificationToken is required"),
-  body("email")
-    .notEmpty()
-    .withMessage("email is required")
-    .isEmail()
-    .withMessage("invalid email format"),
-]);
-
-export const validateForgotPasswordInput = withValidationErrors([
-  body("email")
-    .notEmpty()
-    .withMessage("email is required")
-    .isEmail()
-    .withMessage("invalid email format"),
-]);
-
-export const validateResetPasswordInput = withValidationErrors([
-  body("token").notEmpty().withMessage("token is required"),
-  body("newPassword")
-    .notEmpty()
-    .withMessage("newPassword is required")
-    .isLength({ min: 8 })
-    .withMessage("password must be at least 8 characters long"),
-  body("email")
-    .notEmpty()
-    .withMessage("email is required")
-    .isEmail()
-    .withMessage("invalid email format"),
-]);

@@ -1,26 +1,30 @@
 import mongoose from "mongoose";
 
 const UserSchema = new mongoose.Schema({
-  name: {
+ name: {
     type: String,
+    required: true,
+    unique: true
   },
-
-  email: String,
-  password: String,
-
+  email: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  bestAttempt: {
+    type: Number,
+    default: Infinity
+  },
   role: {
     type: String,
     enum: ["user", "admin"],
     default: "user",
   },
-  avatar: String,
-  avatarPublicId: String,
   verificationToken: String,
-  isVerified: {
-    type: Boolean,
-    default: true,
-  },
-  verified: Date,
   passwordToken: {
     type: String,
   },

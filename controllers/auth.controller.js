@@ -9,8 +9,6 @@ import { randomBytes } from "crypto";
 
 import {
   hashString,
-  sendResetPasswordEmail,
-  sendVerificationEmail,
   createTokenUser,
   attachCookiesToResponse,
 } from "../utils/index.js";
@@ -19,63 +17,30 @@ import { comparePassword, hashPassword } from "../utils/passwordUtils.js";
 export const register = async (req, res) => {
   const { email, name } = req.body;
 
-  // first registered user is an admin
-  const isFirstAccount = (await User.countDocuments()) === 0;
-  const role = isFirstAccount ? "admin" : "user";
+  // // first registered user is an admin
+  // const isFirstAccount = (await User.countDocuments()) === 0;
+  // const role = isFirstAccount ? "admin" : "user";
 
   const hashedPassword = await hashPassword(req.body.password);
 
   const verificationToken = randomBytes(40).toString("hex");
 
-  const user = await User.create({
+   await User.create({
     name,
     email,
     password: hashedPassword,
-    role,
+    // role,
     verificationToken,
-  });
+});
 
-  const origin = "http://localhost:5000";
 
-  // const newOrigin = 'https://react-node-user-workflow-front-end.netlify.app';
-
-  // const tempOrigin = req.get('origin');
-  // const protocol = req.protocol;
-  // const host = req.get('host');
-  // const forwardedHost = req.get('x-forwarded-host');
-  // const forwardedProtocol = req.get('x-forwarded-proto');
-
-  await sendVerificationEmail({
-    name: user.name,
-    email: user.email,
-    verificationToken: user.verificationToken,
-    origin,
-  });
   // send verification token back only while testing in postman!!!
   res.status(StatusCodes.CREATED).json({
-    msg: "Success! Please check your email to verify account",
+    msg: "User registered!",
   });
 };
 
-export const verifyEmail = async (req, res) => {
-  const { verificationToken, email } = req.body;
-  const user = await User.findOne({ email });
 
-  if (!user) {
-    throw new UnauthenticatedError("Verification Failed");
-  }
-
-  if (user.verificationToken !== verificationToken) {
-    throw new UnauthenticatedError("Verification Failed");
-  }
-
-  (user.isVerified = true), (user.verified = Date.now());
-  user.verificationToken = "";
-
-  await user.save();
-
-  res.status(StatusCodes.OK).json({ msg: "Email Verified" });
-};
 
 export const login = async (req, res) => {
   const { email } = req.body;
@@ -93,9 +58,7 @@ export const login = async (req, res) => {
   if (!isPasswordCorrect) {
     throw new UnauthenticatedError("Invalid Credentials");
   }
-  if (!user.isVerified) {
-    throw new UnauthenticatedError("Please verify your email");
-  }
+ 
   const tokenUser = createTokenUser(user);
 
   // create refresh token
@@ -140,57 +103,4 @@ export const logout = async (req, res) => {
   res.status(StatusCodes.OK).json({ msg: "user logged out!" });
 };
 
-export const forgotPassword = async (req, res) => {
-  const { email } = req.body;
-  if (!email) {
-    throw new BadRequestError("Please provide valid email");
-  }
-
-  const user = await User.findOne({ email });
-
-  if (user) {
-    const passwordToken = randomBytes(70).toString("hex");
-    // send email
-    const origin = "http://localhost:3000";
-    await sendResetPasswordEmail({
-      name: user.name,
-      email: user.email,
-      token: passwordToken,
-      origin,
-    });
-
-    const tenMinutes = 1000 * 60 * 10;
-    const passwordTokenExpirationDate = new Date(Date.now() + tenMinutes);
-
-    user.passwordToken = hashString(passwordToken);
-    user.passwordTokenExpirationDate = passwordTokenExpirationDate;
-    await user.save();
-  }
-
-  res
-    .status(StatusCodes.OK)
-    .json({ msg: "Please check your email for reset password link" });
-};
-
-export const resetPassword = async (req, res) => {
-  const { token, email, newPassword } = req.body;
-
-  const user = await User.findOne({ email });
-  const hashedPassword = await hashPassword(req.body.newPassword);
-
-  if (user) {
-    const currentDate = new Date();
-
-    if (
-      user.passwordToken === hashString(token) &&
-      user.passwordTokenExpirationDate > currentDate
-    ) {
-      user.password = hashedPassword;
-      user.passwordToken = null;
-      user.passwordTokenExpirationDate = null;
-      await user.save();
-    }
-  }
-
-  res.send("Password reset successfully!");
-};
+ 
