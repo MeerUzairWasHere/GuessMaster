@@ -4,12 +4,10 @@ const UserSchema = new mongoose.Schema({
  name: {
     type: String,
     required: true,
-    unique: true
   },
   email: {
     type: String,
     required: true,
-    unique: true
   },
   password: {
     type: String,
@@ -25,12 +23,6 @@ const UserSchema = new mongoose.Schema({
     default: "user",
   },
   verificationToken: String,
-  passwordToken: {
-    type: String,
-  },
-  passwordTokenExpirationDate: {
-    type: Date,
-  },
 });
 
 UserSchema.methods.toJSON = function () {
