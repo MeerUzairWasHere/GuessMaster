@@ -14,6 +14,7 @@ import path from "path";
 
 //  routers
 import authRouter from "./routes/auth.routes.js";
+import gameRouter from "./routes/game.routes.js";
 import userRouter from "./routes/user.routes.js";
 
 //connect db
@@ -41,6 +42,7 @@ app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/games", gameRouter);
 
 // app.get("*", (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));

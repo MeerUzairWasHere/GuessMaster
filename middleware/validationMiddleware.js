@@ -67,4 +67,10 @@ export const validateUpdateUserInput = withValidationErrors([
     }),
 ]);
 
-
+export const validateGameInput = withValidationErrors([
+  body("difficulty")
+    .isIn(["easy", "medium", "hard"])
+    .withMessage(
+      "Only one of these values are valid: ['easy','medium','hard']"
+    ),
+]);
