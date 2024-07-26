@@ -23,22 +23,22 @@ export const createGame = async (req, res) => {
   res.status(StatusCodes.OK).json({ game });
 };
 
-export const getAll = async (req, res) => {
-    const games = await Game.
-  res.status(StatusCodes.OK).json({ msg: "getAll" });
+export const getAllGames = async (req, res) => {
+  const games = await Game.find({ userId: req.user.userId });
+  res.status(StatusCodes.OK).json({ games });
 };
 
-export const getSingle = async (req, res) => {
+export const deleteGame = async (req, res) => {
   const { id } = req.params;
-  res.status(StatusCodes.OK).json({ msg: "getSingle" });
-};
+  const game = await Game.findOneAndDelete({
+    userId: req.user.userId,
+    _id: id,
+  });
+  if (!game) {
+    res
+      .status(StatusCodes.BAD_REQUEST)
+      .json({ msg: `no game found with id ${id} ` });
+  }
 
-export const update = async (req, res) => {
-  const { id } = req.params;
-  res.status(StatusCodes.OK).json({ msg: "Updated Successfully" });
-};
-
-export const delete_ = async (req, res) => {
-  const { id } = req.params;
   res.status(StatusCodes.OK).json({ msg: "Deleted Successfully" });
 };
