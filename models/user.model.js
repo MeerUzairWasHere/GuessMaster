@@ -13,7 +13,15 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  bestAttempt: {
+  easyAttempt: {
+    type: Number,
+    default: Infinity
+  },
+  mediumAttempt: {
+    type: Number,
+    default: Infinity
+  },
+  hardAttempt: {
     type: Number,
     default: Infinity
   },

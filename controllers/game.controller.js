@@ -21,6 +21,11 @@ export const createGame = async (req, res) => {
   });
 
   res.status(StatusCodes.OK).json({ game });
+
+  // res.status(StatusCodes.OK).json({
+  //   userId: req.user.userId,
+  //   difficulty,            for deployment
+  // });
 };
 
 export const getAllGames = async (req, res) => {

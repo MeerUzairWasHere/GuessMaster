@@ -16,6 +16,7 @@ import path from "path";
 import authRouter from "./routes/auth.routes.js";
 import gameRouter from "./routes/game.routes.js";
 import userRouter from "./routes/user.routes.js";
+import guessRouter from "./routes/guess.routes.js";
 
 //connect db
 import connectDB from "./db/connect.js";
@@ -43,6 +44,7 @@ app.use(mongoSanitize());
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/games", gameRouter);
+app.use("/api/v1/guess", guessRouter);
 
 // app.get("*", (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
