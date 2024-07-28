@@ -23,7 +23,6 @@ export const getMediumLeaderboard = async (req, res) => {
 };
 
 export const getHardLeaderboard = async (req, res) => {
-  // const users = await User.find({}).sort({ hardAttempt: 1 });
   const users = await User.find({ hardAttempt: { $ne: Infinity } }).sort({ hardAttempt: 1 });
   res.status(StatusCodes.OK).json(
     users.map((user) => ({
