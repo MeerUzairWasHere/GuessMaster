@@ -1,7 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import Game from "../models/game.model.js";
-import Guess from "../models/guess.model.js";
-import User from "../models/user.model.js";
+
 import { updateUserBestAttempt } from "./user.controller.js";
 
 export const createGuess = async (req, res) => {
@@ -9,42 +8,38 @@ export const createGuess = async (req, res) => {
   const { gameId } = req.params;
 
   const game = await Game.findById(gameId);
-
   if (!game) {
     return res
       .status(StatusCodes.NOT_FOUND)
       .json({ message: "Game not found" });
   }
 
-  let result;
-  if (guess < game.secretNumber) {
-    result = "too low";
-  } else if (guess > game.secretNumber) {
-    result = "too high";
-  } else {
-    result = "correct";
+  if (game?.userId?.toString() !== req.user.userId) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "You're not Authorized, Login with same id as gameId" });
   }
 
-  // Create a new guess
-  const newGuess = new Guess({
-    gameId,
-    userId: req.user.userId,
-    guess,
-    result,
-  });
-
-  await newGuess.save();
-
+  let result;
+  if (guess < game.secretNumber) {
+    result = `${guess} is too low!`;
+  } else if (guess > game.secretNumber) {
+    result = `${guess} is too high!`;
+  } else {
+    result = `Yay! ${guess} is correct! You Won!`;
+  }
   // Update game attempts if the guess is incorrect
-  if (result !== "correct") {
-    game.attempts += 1;
+  game.attempts += 1;
+
+  if (result !== `Yay! ${guess} is correct! You Won!`) {
     await game.save();
   } else {
     await updateUserBestAttempt(
       req?.user.userId,
-      game?.attempts + 1,
+      game?.attempts,
       game?.difficulty
     );
+    await game.save();
   }
 
   res.status(StatusCodes.OK).json({ result });
