@@ -52,7 +52,7 @@ app.use("/api/v1/leaderboard", leaderboardRouter);
 //   });       // uncomment for production
 
 app.get("*", (req, res) => {
- res.redirect("")
+  res.redirect("https://documenter.getpostman.com/view/29700259/2sA3kd9cgQ");
 }); // uncomment for production
 
 //handling errors
