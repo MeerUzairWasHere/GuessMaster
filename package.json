@@ -6,7 +6,7 @@
   "main": "server.js",
   "scripts": {
   "setup-project": "npm i && cd client && npm i",
-  "dev": "nodemon server",
+  "server": "nodemon server",
   "client": "cd client && npm run dev",
   "devdev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\""
 },
