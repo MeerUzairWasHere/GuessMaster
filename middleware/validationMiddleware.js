@@ -74,3 +74,8 @@ export const validateGameInput = withValidationErrors([
       "Only one of these values are valid: ['easy','medium','hard']"
     ),
 ]);
+export const validateGuessInput = withValidationErrors([
+  body("guess").isInt().withMessage(
+      "Only Integers please."
+    ),
+]);

@@ -40,6 +40,10 @@ export const createGuess = async (req, res) => {
       game?.difficulty
     );
     await game.save();
+    await Game.findOneAndDelete({
+      userId: req.user.userId,
+      _id: gameId,
+    });
   }
 
   res.status(StatusCodes.OK).json({ result });
