@@ -18,21 +18,21 @@ export const createGame = async (req, res) => {
     userId: req.user.userId,
     difficulty,
     secretNumber,
-  });
+  }).select("-secretNumber");
 
-  // res.status(StatusCodes.OK).json({ game });
+  res.status(StatusCodes.OK).json({ game });
 
-  res.status(StatusCodes.OK).json({
-    userId: req.user.userId,
-    difficulty,
-  });
+  // res.status(StatusCodes.OK).json({
+  //   userId: req.user.userId,
+  //   difficulty,
+  // })
 };
 
 export const getAllGames = async (req, res) => {
-  const games = await Game.find({ userId: req.user.userId });
-  res
-    .status(StatusCodes.OK)
-    .json({ userId: games?.userId, gameId: games?._id,level:games?.difficulty });
+  const games = await Game.find({ userId: req.user.userId }).select(
+    "-secretNumber"
+  );
+  res.status(StatusCodes.OK).json({ games });
 };
 
 export const deleteGame = async (req, res) => {
