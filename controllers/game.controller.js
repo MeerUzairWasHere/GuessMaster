@@ -20,12 +20,12 @@ export const createGame = async (req, res) => {
     secretNumber,
   });
 
-  res.status(StatusCodes.OK).json({ game });
+  // res.status(StatusCodes.OK).json({ game });
 
-  // res.status(StatusCodes.OK).json({
-  //   userId: req.user.userId,
-  //   difficulty,            for deployment
-  // });
+  res.status(StatusCodes.OK).json({
+    userId: req.user.userId,
+    difficulty,
+  });
 };
 
 export const getAllGames = async (req, res) => {
