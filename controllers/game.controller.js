@@ -30,7 +30,9 @@ export const createGame = async (req, res) => {
 
 export const getAllGames = async (req, res) => {
   const games = await Game.find({ userId: req.user.userId });
-  res.status(StatusCodes.OK).json({ games });
+  res
+    .status(StatusCodes.OK)
+    .json({ userId: games?.userId, gameId: games?._id,level:games?.difficulty });
 };
 
 export const deleteGame = async (req, res) => {
