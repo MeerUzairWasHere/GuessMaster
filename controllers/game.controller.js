@@ -18,14 +18,16 @@ export const createGame = async (req, res) => {
     userId: req.user.userId,
     difficulty,
     secretNumber,
-  }).select("-secretNumber");
+  });
 
-  res.status(StatusCodes.OK).json({ game });
+  res.status(StatusCodes.OK).json({
+    _id: game._id,
+    userId: game.userId,
+    difficulty: game.difficulty,
+    attempts: game.attempts,
+    createdAt: game.createdAt,
+  });
 
-  // res.status(StatusCodes.OK).json({
-  //   userId: req.user.userId,
-  //   difficulty,
-  // })
 };
 
 export const getAllGames = async (req, res) => {
