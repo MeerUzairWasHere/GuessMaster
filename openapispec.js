@@ -553,8 +553,8 @@ export const openApiSpec = {
           }
         }
       },
-      "/user/current-user": {
-        "get": {
+      "/users/current-user": {
+        "get": {    
           "summary": "Get the current logged-in user's profile",
           "tags": [
             "User"
