@@ -1,12 +1,12 @@
 export const openApiSpec = {
     "openapi": "3.0.0",
     "info": {
-      "title": "Game API",
+      "title": "Guess Master",
       "description": "This API allows users to play a number-guessing game, manage user authentication, view leaderboards, and access user profiles.",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "contact": {
         "name": "Mir Uzair Bashir",
-        "email": "your-email@example.com"
+        "email": "meer.uxair007@gmail.com"
       }
     },
     "servers": [
