@@ -9,7 +9,8 @@ import mongoSanitize from "express-mongo-sanitize";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
-
+import swaggerUi from  "swagger-ui-express";
+import { openApiSpec } from "./openapispec.js";
 // const __dirname = dirname(fileURLToPath(import.meta.url)); for deployment
 
 //  routers
@@ -46,13 +47,13 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/guess", guessRouter);
 app.use("/api/v1/leaderboard", leaderboardRouter);
-
+app.use("/documentation",swaggerUi.serve,swaggerUi.setup(openApiSpec))
 // app.get("*", (req, res) => {
 //     res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
 //   });       // uncomment for production
 
 app.get("*", (req, res) => {
-  res.redirect("https://documenter.getpostman.com/view/29700259/2sA3kd9cgQ");
+  res.redirect("/documentation");
 }); // uncomment for production
 
 //handling errors
