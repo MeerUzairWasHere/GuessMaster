@@ -10,7 +10,6 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
 import swaggerUi from  "swagger-ui-express";
-import cors from "cors";
 
 import { openApiSpec } from "./openapispec.js";
 // const __dirname = dirname(fileURLToPath(import.meta.url)); for deployment
@@ -33,7 +32,6 @@ import { StatusCodes } from "http-status-codes";
 //applying thirdparty middlewares
 const app = express();
 app.use(express.json());
-app.use(cors({credentials:true,}));
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }
