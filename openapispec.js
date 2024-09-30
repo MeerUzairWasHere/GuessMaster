@@ -360,7 +360,7 @@ export const openApiSpec = {
           }
         }
       },
-      "/guesses/{gameId}": {
+      "/guess/{gameId}": {
         "post": {
           "summary": "Submit a guess for the game",
           "tags": [
