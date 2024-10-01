@@ -6,9 +6,6 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import path from "path";
 import cors from "cors"
 import swaggerUi from  "swagger-ui-express";
 
@@ -37,11 +34,11 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-// app.use(express.static(path.resolve(__dirname, "./client/dist"))); for deployment
 
 //security packages
 app.use(helmet());
-app.use(cors({credentials:true}));
+app.use(cors({origin:'http://localhost:5173',
+  credentials:true}));
 app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
@@ -50,9 +47,6 @@ app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/guess", guessRouter);
 app.use("/api/v1/leaderboard", leaderboardRouter);
 app.use("/documentation",swaggerUi.serve,swaggerUi.setup(openApiSpec))
-// app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "./client/dist", "index.html"));
-//   });       // uncomment for production
 
 app.get("*", (req, res) => {
   res.redirect("/documentation");
