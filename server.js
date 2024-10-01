@@ -9,6 +9,7 @@ import mongoSanitize from "express-mongo-sanitize";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
 import path from "path";
+import cors from "cors"
 import swaggerUi from  "swagger-ui-express";
 
 import { openApiSpec } from "./openapispec.js";
@@ -27,7 +28,6 @@ import connectDB from "./db/connect.js";
 //error handlers
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
-import { StatusCodes } from "http-status-codes";
 
 //applying thirdparty middlewares
 const app = express();
@@ -41,6 +41,9 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 //security packages
 app.use(helmet());
+app.use(cors({
+  origin: '*', // Allow all origins
+  credentials:true}));
 app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
