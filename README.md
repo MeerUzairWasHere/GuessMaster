@@ -4,7 +4,9 @@
 
 # GuessMaster
 
-GuessMaster is a full-stack web game where users sign up, select a difficulty level, and guess a random secret number. The game provides hints, tracks attempts, and updates a leaderboard showcasing the top players.
+GuessMaster is a game where users sign up, select a difficulty level, and guess a random secret number. The game provides hints, tracks attempts, and updates a leaderboard showcasing the top players.
+
+> **Note:** You can use [GuessMaster Client](https://www.npmjs.com/package/guessmasterclient) package to interact with the API.
 
 
 ## Features
