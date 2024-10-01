@@ -41,9 +41,7 @@ app.use(cookieParser(process.env.COOKIE_SECRET));
 
 //security packages
 app.use(helmet());
-app.use(cors({
-  origin: '*', // Allow all origins
-  credentials:true}));
+app.use(cors({credentials:true}));
 app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
