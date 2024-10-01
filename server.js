@@ -10,11 +10,9 @@ import cors from "cors"
 import swaggerUi from  "swagger-ui-express";
 
 import { openApiSpec } from "./openapispec.js";
-// const __dirname = dirname(fileURLToPath(import.meta.url)); for deployment
 
 //  routers
 import authRouter from "./routes/auth.routes.js";
-import apiKeyRouter from "./routes/apiKey.routes.js";
 import gameRouter from "./routes/game.routes.js";
 import userRouter from "./routes/user.routes.js";
 import guessRouter from "./routes/guess.routes.js";
@@ -26,7 +24,6 @@ import connectDB from "./db/connect.js";
 //error handlers
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
-import apiKeyValidator from "./middleware/apiKeyValidator.js";
 
 //applying thirdparty middlewares
 const app = express();
@@ -47,7 +44,6 @@ app.use(cors((req, callback) => {
 app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
-app.use("/api/v1/apikey", apiKeyRouter);
 // app.use(apiKeyValidator);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/games", gameRouter);
