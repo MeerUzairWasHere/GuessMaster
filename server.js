@@ -48,7 +48,7 @@ app.use(mongoSanitize());
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/apikey", apiKeyRouter);
-app.use(apiKeyValidator);
+// app.use(apiKeyValidator);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/guess", guessRouter);
