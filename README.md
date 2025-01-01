@@ -17,7 +17,7 @@ GuessMaster is a game where users sign up, select a difficulty level, and guess 
 - Attempts tracking for each game session.
 - Leaderboard showcasing top players across all difficulty levels.
 
-# Post Collection
+# Postman Collection
 - [Click here!](https://documenter.getpostman.com/view/29700259/2sA3kd9cgQ)
 
 
