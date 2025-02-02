@@ -6,8 +6,9 @@ import morgan from "morgan";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import mongoSanitize from "express-mongo-sanitize";
-import cors from "cors"
-import swaggerUi from  "swagger-ui-express";
+import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import rateLimiter from "express-rate-limit";
 
 import { openApiSpec } from "./openapispec.js";
 
@@ -33,15 +34,23 @@ if (process.env.NODE_ENV === "development") {
 }
 app.use(cookieParser(process.env.COOKIE_SECRET));
 
-
 //security packages
 app.use(helmet());
-app.use(cors((req, callback) => {
-  const origin = req.header('Origin');
-  // Allow requests from any origin but enable credentials
-  callback(null, { origin: true, credentials: true });
-}));
+app.use(
+  cors((req, callback) => {
+    const origin = req.header("Origin");
+    // Allow requests from any origin but enable credentials
+    callback(null, { origin: true, credentials: true });
+  })
+);
 app.use(mongoSanitize());
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 60,
+  })
+);
 
 app.use("/api/v1/auth", authRouter);
 // app.use(apiKeyValidator);
@@ -49,7 +58,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/games", gameRouter);
 app.use("/api/v1/guess", guessRouter);
 app.use("/api/v1/leaderboard", leaderboardRouter);
-app.use("/documentation",swaggerUi.serve,swaggerUi.setup(openApiSpec))
+app.use("/documentation", swaggerUi.serve, swaggerUi.setup(openApiSpec));
 
 app.get("*", (req, res) => {
   res.redirect("/documentation");
