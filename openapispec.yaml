@@ -7,7 +7,7 @@ info:
     name: Mir Uzair Bashir
     email: meer.uxair007@gmail.com
 servers:
-  - url: https://guessmaster.onrender.com
+  - url: https://guessmaster-zsfh.onrender.com/api/v1
     description: Live server
   - url: http://localhost:5000
     description: Local development server

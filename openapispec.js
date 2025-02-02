@@ -11,7 +11,7 @@ export const openApiSpec = {
     },
     "servers": [
       {
-        "url": "https://guessmaster.onrender.com/api/v1",
+        "url": "https://guessmaster-zsfh.onrender.com/api/v1",
         "description": "Live server"
       },
       {
